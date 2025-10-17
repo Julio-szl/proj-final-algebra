@@ -10,9 +10,13 @@ class CalculadoraMatrices:
         self.main = main
         self.main.title("Calculadora de Matrices")
         self.main.geometry("1000x700")
-        ctk.set_appearance_mode("system")
-        ctk.set_default_color_theme("blue")
 
+        # 🌙 Estilo oscuro elegante
+        ctk.set_appearance_mode("dark")
+        ctk.set_default_color_theme("blue")
+        self.main.configure(fg_color="#111315")
+
+        # Variables de control
         self.matrizA = []
         self.matrizB = []
         self.size_matriz = ctk.StringVar(value=tamaño)
@@ -21,65 +25,150 @@ class CalculadoraMatrices:
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        titulo = ctk.CTkLabel(self.main, text="Calculadora de Matrices", font=("Arial", 24, "bold"))
-        titulo.pack(pady=20)
+        # 🏷️ Título principal
+        titulo = ctk.CTkLabel(
+            self.main,
+            text="Calculadora de Matrices Avanzada",
+            font=("Segoe UI", 26, "bold"),
+            text_color="#EAEAEA"
+        )
+        titulo.pack(pady=(30, 15))
 
-        frame_opciones = ctk.CTkFrame(self.main, corner_radius=25)
-        frame_opciones.pack(pady=20)
+        # ⚙️ Frame superior de configuración (centrado)
+        frame_opciones = ctk.CTkFrame(self.main, corner_radius=25, fg_color="#1C1F26")
+        frame_opciones.pack(pady=20, padx=20)
 
-        ctk.CTkLabel(frame_opciones, text="Tamaño actual:", font=("Arial", 16)).grid(row=0, column=0, padx=5)
-        ctk.CTkLabel(frame_opciones, textvariable=self.size_matriz, font=("Arial", 16, "bold")).grid(row=0, column=1, padx=5)
+        contenedor = ctk.CTkFrame(frame_opciones, fg_color="transparent")
+        contenedor.pack(padx=20, pady=10)
 
-        ctk.CTkLabel(frame_opciones, text="Operación:", font=("Arial", 16)).grid(row=0, column=2, padx=5)
+        # 🧩 Tamaño
+        ctk.CTkLabel(contenedor, text="Tamaño:", font=("Segoe UI", 16), text_color="#EAEAEA").grid(row=0, column=0, padx=10, pady=10)
+        opciones_tamaño = ["2x2", "3x3", "2x3", "3x2", "4x4", "4x2", "2x4", "Rectangular"]
+        menu_tamaño = ctk.CTkOptionMenu(
+            contenedor,
+            variable=self.size_matriz,
+            values=opciones_tamaño,
+            corner_radius=20,
+            fg_color="#2A2D34",
+            text_color="#EAEAEA",
+            dropdown_fg_color="#2A2D34",
+            dropdown_text_color="#EAEAEA",
+            button_color="#0078D7",
+            button_hover_color="#005a9e",
+            command=lambda _: self.generar_campos()
+        )
+        menu_tamaño.grid(row=0, column=1, padx=10, pady=10)
+
+        # ⚙️ Operación
+        ctk.CTkLabel(contenedor, text="Operación:", font=("Segoe UI", 16), text_color="#EAEAEA").grid(row=0, column=2, padx=10, pady=10)
         operaciones = ["Suma", "Resta", "Multiplicación", "Determinante", "Inversa", "Cofactores", "Gauss-Jordan"]
-        ctk.CTkOptionMenu(frame_opciones, variable=self.operacion_matriz, values=operaciones, command=self.generar_campos).grid(row=0, column=3, padx=5)
+        menu_operacion = ctk.CTkOptionMenu(
+            contenedor,
+            variable=self.operacion_matriz,
+            values=operaciones,
+            corner_radius=20,
+            fg_color="#2A2D34",
+            text_color="#EAEAEA",
+            dropdown_fg_color="#2A2D34",
+            dropdown_text_color="#EAEAEA",
+            button_color="#0078D7",
+            button_hover_color="#005a9e",
+            command=lambda _: self.actualizar_operacion()
+        )
+        menu_operacion.grid(row=0, column=3, padx=10, pady=10)
 
-        ctk.CTkButton(frame_opciones, text="Calcular", command=self.calcular).grid(row=0, column=4, padx=10)
+        # 🧮 Botones
+        boton_calcular = ctk.CTkButton(
+            contenedor, text="Calcular", corner_radius=20,
+            fg_color="#0078D7", hover_color="#005a9e",
+            font=("Segoe UI", 15, "bold"),
+            command=self.calcular
+        )
+        boton_calcular.grid(row=0, column=4, padx=15, pady=10)
 
-        self.frame_matrices = ctk.CTkFrame(self.main)
-        self.frame_matrices.pack(pady=15)
-        self.generar_campos(self.size_matriz.get())
+        boton_limpiar = ctk.CTkButton(
+            contenedor, text="🗑️ Limpiar", corner_radius=20,
+            fg_color="#2A2D34", text_color="#EAEAEA",
+            hover_color="#383C44",
+            font=("Segoe UI", 15),
+            command=self.limpiar_campos
+        )
+        boton_limpiar.grid(row=0, column=5, padx=10, pady=10)
 
-        self.resultado_label = ctk.CTkTextbox(self.main, height=150, width=600, font=("Consolas", 18))
-        self.resultado_label.pack(pady=15)
+        # 🧩 Área de matrices
+        self.frame_matrices = ctk.CTkFrame(self.main, corner_radius=25, fg_color="#1C1F26")
+        self.frame_matrices.pack(pady=25, padx=20)
+        self.generar_campos()
 
-    def generar_campos(self, tamaño):
+        # 🧾 Área de resultados
+        frame_resultado = ctk.CTkFrame(self.main, corner_radius=25, fg_color="#1C1F26")
+        frame_resultado.pack(pady=25, padx=20, fill="x")
+
+        ctk.CTkLabel(frame_resultado, text="Resultado:", font=("Segoe UI", 18, "bold"), text_color="#EAEAEA").pack(pady=10)
+        self.resultado_label = ctk.CTkTextbox(
+            frame_resultado, height=150, width=700, font=("Consolas", 18),
+            fg_color="#0E1012", text_color="#EAEAEA", border_width=0, corner_radius=15
+        )
+        self.resultado_label.pack(pady=(0, 15))
+
+    def generar_campos(self):
+        """Genera las matrices basadas en el tamaño y operación actual."""
         for widget in self.frame_matrices.winfo_children():
             widget.destroy()
 
-        filas, columnas = map(int, tamaño.split("x"))
+        # 📏 Obtener tamaño de la matriz
+        tamaño = self.size_matriz.get()
+        if tamaño.lower() == "rectangular":
+            filas, columnas = 3, 4  # predeterminado
+        else:
+            filas, columnas = map(int, tamaño.split("x"))
+
         self.matrizA = []
         self.matrizB = []
 
-        # Matriz A
-        ctk.CTkLabel(self.frame_matrices, text="Matriz A", font=("Arial", 16, "bold")).grid(row=0, column=0, pady=5)
-        frameA = ctk.CTkFrame(self.frame_matrices)
-        frameA.grid(row=1, column=0, padx=15)
+        # 🅰️ Matriz A
+        ctk.CTkLabel(self.frame_matrices, text="Matriz A", font=("Segoe UI", 16, "bold"), text_color="#EAEAEA").grid(row=0, column=0, pady=10)
+        frameA = ctk.CTkFrame(self.frame_matrices, corner_radius=20, fg_color="#2A2D34")
+        frameA.grid(row=1, column=0, padx=20, pady=10)
         for i in range(filas):
             fila = []
             for j in range(columnas):
-                entry = ctk.CTkEntry(frameA, width=60)
-                entry.grid(row=i, column=j, padx=3, pady=3)
+                entry = ctk.CTkEntry(frameA, width=60, corner_radius=10, fg_color="#0E1012", text_color="#EAEAEA", justify="center")
+                entry.grid(row=i, column=j, padx=4, pady=4)
                 fila.append(entry)
             self.matrizA.append(fila)
 
-        # Matriz B (solo si aplica)
+        # 🅱️ Matriz B (solo si aplica)
         if self.operacion_matriz.get() in ["Suma", "Resta", "Multiplicación"]:
-            ctk.CTkLabel(self.frame_matrices, text="Matriz B", font=("Arial", 16, "bold")).grid(row=0, column=1, pady=5)
-            frameB = ctk.CTkFrame(self.frame_matrices)
-            frameB.grid(row=1, column=1, padx=15)
+            ctk.CTkLabel(self.frame_matrices, text="Matriz B", font=("Segoe UI", 16, "bold"), text_color="#EAEAEA").grid(row=0, column=1, pady=10)
+            frameB = ctk.CTkFrame(self.frame_matrices, corner_radius=20, fg_color="#2A2D34")
+            frameB.grid(row=1, column=1, padx=20, pady=10)
             for i in range(filas):
                 fila = []
                 for j in range(columnas):
-                    entry = ctk.CTkEntry(frameB, width=60)
-                    entry.grid(row=i, column=j, padx=3, pady=3)
+                    entry = ctk.CTkEntry(frameB, width=60, corner_radius=10, fg_color="#0E1012", text_color="#EAEAEA", justify="center")
+                    entry.grid(row=i, column=j, padx=4, pady=4)
                     fila.append(entry)
                 self.matrizB.append(fila)
+
+    def actualizar_operacion(self):
+        self.generar_campos()
+
+    def limpiar_campos(self):
+        """Limpia todas las casillas y el área de resultado."""
+        for lista in (self.matrizA + self.matrizB):
+            for entry in lista:
+                entry.delete(0, "end")
+        self.resultado_label.delete("1.0", "end")
 
     def calcular(self):
         op = self.operacion_matriz.get()
         A = validar_numeros(self.matrizA)
         if A is None:
+            return
+
+        # Validación para operaciones que requieren matriz cuadrada
+        if not validar_cuadrada(A, op):
             return
 
         if op in ["Suma", "Resta", "Multiplicación"]:

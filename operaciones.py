@@ -30,7 +30,7 @@ def inversa(A):
     validar_cuadrada(A)
     det = np.linalg.det(A)
     if det == 0:
-        raise ValueError("La matriz es singular y no tiene inversa.")
+        raise ValueError("Determinante 0 y no tiene inversa.")
     return np.linalg.inv(A)
 
 

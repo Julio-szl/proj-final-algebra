@@ -11,7 +11,7 @@ class CalculadoraMatrices:
         self.main.title("Calculadora de Matrices")
         self.main.geometry("1000x700")
 
-        # 🌙 Estilo oscuro elegante
+        # Estilo de la interfaz
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
         self.main.configure(fg_color="#111315")
@@ -25,23 +25,23 @@ class CalculadoraMatrices:
         self.crear_interfaz()
 
     def crear_interfaz(self):
-        # 🏷️ Título principal
+        # Titulo
         titulo = ctk.CTkLabel(
             self.main,
-            text="Calculadora de Matrices Avanzada",
+            text="Calculadora de Matrices",
             font=("Segoe UI", 26, "bold"),
             text_color="#EAEAEA"
         )
         titulo.pack(pady=(30, 15))
 
-        # ⚙️ Frame superior de configuración (centrado)
+        # Frame de opciones
         frame_opciones = ctk.CTkFrame(self.main, corner_radius=25, fg_color="#1C1F26")
         frame_opciones.pack(pady=20, padx=20)
 
         contenedor = ctk.CTkFrame(frame_opciones, fg_color="transparent")
         contenedor.pack(padx=20, pady=10)
 
-        # 🧩 Tamaño
+        # Tamaño
         ctk.CTkLabel(contenedor, text="Tamaño:", font=("Segoe UI", 16), text_color="#EAEAEA").grid(row=0, column=0, padx=10, pady=10)
         opciones_tamaño = ["2x2", "3x3", "2x3", "3x2", "4x4", "4x2", "2x4", "Rectangular"]
         menu_tamaño = ctk.CTkOptionMenu(

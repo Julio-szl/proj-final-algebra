@@ -1,6 +1,7 @@
 import numpy as np
 from utils import validar_cuadrada
 
+# Buenas
 
 def sumar_matrices(A, B):
     if A.shape != B.shape:

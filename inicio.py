@@ -49,7 +49,7 @@ class PantallaInicio(ctk.CTk):
                                                   corner_radius=15)
         self.menu_operaciones.grid(row=2, column=1, padx=10, pady=10)
 
-        # Botón principal con diseño redondeado
+        # Botón principal
         ctk.CTkButton(self.container,
                       text="Calcular",
                       font=("Arial Rounded MT Bold", 18),

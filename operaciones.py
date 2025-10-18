@@ -49,7 +49,7 @@ def gauss_jordan(A):
     A = np.array(A, dtype=float)
     filas, columnas = A.shape
     if columnas != filas + 1:
-        raise ValueError("La matriz aumentada debe tener una columna adicional para Gauss-Jordan.")
+        raise ValueError("La matriz aumentada debe tener una columna adicional para calcular matriz con Gauss-Jordan.")
 
     for i in range(filas):
         if A[i, i] == 0:
@@ -58,7 +58,7 @@ def gauss_jordan(A):
                     A[[i, j]] = A[[j, i]]
                     break
             else:
-                raise ValueError("No se puede realizar Gauss-Jordan, pivote nulo.")
+                raise ValueError("No se puede resolver, pivote nulo.")
         A[i] = A[i] / A[i, i]
         for j in range(filas):
             if i != j:

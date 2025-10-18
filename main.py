@@ -7,6 +7,30 @@ from utils import *
 
 class CalculadoraMatrices:
     def __init__(self, main, tamaño, operacion):
+        
+        
+        
+        # ---------------------------------------------------------------------------------------------------
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        #                                   SELF ES IGUAL A THIS DE JAVA
+        # ---------------------------------------------------------------------------------------------------
+        
+        
+        
+        
+        # Configuración de la ventana
         self.main = main
         self.main.title("Calculadora de Matrices")
         self.main.geometry("1000x700")
@@ -115,17 +139,17 @@ class CalculadoraMatrices:
         for widget in self.frame_matrices.winfo_children():
             widget.destroy()
 
-        # Obtener tamaño de la matriz
+        # Obtener tamaño de la matriz y crear campos de entrada conforme el usuario elija
         tamaño = self.size_matriz.get()
         if tamaño.lower() == "rectangular":
-            filas, columnas = 3, 4  # predeterminado
+            filas, columnas = 3, 4  # Predeterminado? No se si funciona porque esta el menu inicio pero aca esta por si acaso
         else:
             filas, columnas = map(int, tamaño.split("x"))
 
         self.matrizA = []
         self.matrizB = []
 
-        # Matriz A
+        # Matriz A, esto me ayudó chatpgt la verdad porque no le entendi al 100
         ctk.CTkLabel(self.frame_matrices, text="Matriz A", font=("Segoe UI", 16, "bold"), text_color="#EAEAEA").grid(row=0, column=0, pady=10)
         frameA = ctk.CTkFrame(self.frame_matrices, corner_radius=20, fg_color="#2A2D34")
         frameA.grid(row=1, column=0, padx=20, pady=10)
@@ -137,7 +161,7 @@ class CalculadoraMatrices:
                 fila.append(entry)
             self.matrizA.append(fila)
 
-        # Matriz B
+        # Matriz B tambien este 
         if self.operacion_matriz.get() in ["Suma", "Resta", "Multiplicación"]:
             ctk.CTkLabel(self.frame_matrices, text="Matriz B", font=("Segoe UI", 16, "bold"), text_color="#EAEAEA").grid(row=0, column=1, pady=10)
             frameB = ctk.CTkFrame(self.frame_matrices, corner_radius=20, fg_color="#2A2D34")

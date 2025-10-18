@@ -5,17 +5,18 @@ from main import CalculadoraMatrices
 class PantallaInicio(ctk.CTk):
     def __init__(self):
         super().__init__()
+        # Configuración de la ventana
         self.title("Menú de Inicio")
         self.geometry("700x500")
-        ctk.set_appearance_mode("system")
+        ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
 
 
-        # Contenedor principal redondeado
+        # Contenedor principal redondeado para que se vea bien
         self.container = ctk.CTkFrame(self, corner_radius=25)
         self.container.pack(expand=True, fill="both", padx=30, pady=30)
 
-        # Título
+        # Título dentro del contenedor
         self.titulo = ctk.CTkLabel(
             self.container,
             text="Calculadora de Matrices",
@@ -23,7 +24,7 @@ class PantallaInicio(ctk.CTk):
         )
         self.titulo.pack(pady=40)
 
-        # Variables de selección
+        # Variables de las operaciones, tama;os en el frame
         self.tipo_matriz = ctk.StringVar(value="Cuadrada")
         self.size_matriz = ctk.StringVar(value="3x3")
         self.operacion_matriz = ctk.StringVar(value="Suma")
